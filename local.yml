@@ -20,3 +20,31 @@
           - kitty-kitten
           - neovim
         state: present
+    - name: Add the flathub flatpak repository remote to the user installation
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+    - name: Install multiple packages
+      community.general.flatpak:
+        name:
+          - org.mozilla.firefox
+          - org.gtk.Gtk3theme.Adwaita-dark
+          - org.chromium.Chromium
+          - flathub com.vivaldi.Vivaldi
+          - com.github.tchx84.Flatseal
+          - com.discordapp.Discord
+          - rest.insomnia.Insomnia
+          - com.logseq.Logseq
+          - md.obsidian.Obsidian
+          - com.slack.Slack
+          - org.flameshot.Flameshot
+          - org.gimp.GIMP
+          - org.inkscape.Inkscape
+          - io.dbeaver.DBeaverCommunity
+          - com.valvesoftware.Steam
+          - org.gnome.Evince
+          - org.gimp.GIMP
+          - org.inkscape.Inkscape
+        method: user
