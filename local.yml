@@ -1,0 +1,22 @@
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Remove default Firefox rpm-ostree
+      community.general.rpm_ostree_pkg:
+        name: 
+          - firefox
+          - firefox-langpacks
+        state: absent
+    - name: Layer required packages with rpm-ostree
+      community.general.rpm_ostree_pkg:
+        name: 
+          - distrobox
+          - docker
+          - docker-compose
+          - eza
+          - fastfetch
+          - fish
+          - kitty
+          - kitty-kitten
+          - neovim
+        state: present
