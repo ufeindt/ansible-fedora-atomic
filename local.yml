@@ -1,7 +1,6 @@
 - hosts: localhost
-  become: true
   tasks:
-    - name: Remove default Firefox rpm-ostree
+    - name: Remove default Firefox with rpm-ostree
       community.general.rpm_ostree_pkg:
         name: 
           - firefox
@@ -25,14 +24,13 @@
         name: flathub
         state: present
         flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-        method: user
-    - name: Install multiple packages
+    - name: Install package from flathub
       community.general.flatpak:
         name:
           - org.mozilla.firefox
           - org.gtk.Gtk3theme.Adwaita-dark
           - org.chromium.Chromium
-          - flathub com.vivaldi.Vivaldi
+          - com.vivaldi.Vivaldi
           - com.github.tchx84.Flatseal
           - com.discordapp.Discord
           - rest.insomnia.Insomnia
@@ -47,4 +45,40 @@
           - org.gnome.Evince
           - org.gimp.GIMP
           - org.inkscape.Inkscape
-        method: user
+    - name: Set flatpak env var for the Firefox GTK theme
+      ansible.builtin.command:
+        argv:
+          - flatpak
+          - override
+          - --user
+          - --env=GTK_THEME=Adwaita:dark
+          - org.mozilla.firefox
+    - name: Set flatpak env var for setting Firefox to prefer dark themes
+      ansible.builtin.command:
+        argv:
+          - flatpak
+          - override
+          - --user
+          - --env=ADW_DEBUG_COLOR_SCHEME=prefer-dark 
+          - org.mozilla.firefox
+    - name: Set git editor to neovim
+      git_config:
+        name: core.editor
+        scope: global
+        value: nvim
+    - name: Set git user name
+      git_config:
+        name: user.name
+        scope: global
+        value: Ulrich Feindt
+    - name: Set git user email
+      git_config:
+        name: user.email
+        scope: global
+        value: ufeindt@gmail.com
+    - name: Set git to set upstream branch automatically
+      git_config:
+        name: push.autoSetRemote
+        scope: global
+        value: true
+
