@@ -1,0 +1,69 @@
+- hosts: localhost
+  tasks:
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        mode: "{{ item.mode }}"
+      loop:
+        - { path: ~/.config, mode: "0700" }
+        - { path: ~/.config-devbox, mode: "0700" }
+        - { path: ~/.local/share/flatpak/overrides, mode: "0755" }
+        - { path: ~/.local/share/fonts/JetBrainsMono, mode: "0755" }
+        - { path: ~/.local/share/fonts/JetBrainsMonoNerdFont, mode: "0755" }
+        - { path: ~/.local/share/fonts/NerdFontsSystemOnly, mode: "0755" }
+        - { path: ~/Workspace, mode: "0755" }
+    - name: Set git editor to neovim
+      git_config:
+        name: core.editor
+        scope: global
+        value: nvim
+    - name: Git config
+      git_config:
+        name: user.name
+        scope: global
+        value: Ulrich Feindt
+      loop:
+        - { name: user.name, value: Ulrich Feindt }
+        - { name: user.email, value: ufeindt@gmail.com }
+        - { name: push.autoSetRemote, value: true }
+    - name: Set gnome setting to prefer dark color schemes
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/color-scheme"
+        value: "'prefer-dark'"
+    - name: Copy Flatpak global overrides
+      ansible.builtin.copy:
+         src: flatpak-global-overrides
+         dest: ~/.local/share/flatpak/overrides/global
+         mode: '0644'
+    - name: Clone my dotfile git repository
+      ansible.builtin.git:
+        repo: git@github.com:ufeindt/dotfiles.git
+        dest: ~/Workspace/dotfiles
+    - name: Create symbolic links to my dotfiles
+      ansible.builtin.file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        state: link
+      loop:
+        - { src: ~/Workspace/dotfiles/config/dunst, dest: ~/.config/dunst }
+        - { src: ~/Workspace/dotfiles/config/fish, dest: ~/.config/fish }
+        - { src: ~/Workspace/dotfiles/config/kitty, dest: ~/.config/kitty }
+        - { src: ~/Workspace/dotfiles/config/nvim, dest: ~/.config/nvim }
+        - { src: ~/Workspace/dotfiles/config/rofi, dest: ~/.config/rofi }
+        - { src: ~/Workspace/dotfiles/config/starship.toml, dest: ~/.config/starship.toml }
+        - { src: ~/Workspace/dotfiles/config/sway, dest: ~/.config/sway }
+        - { src: ~/Workspace/dotfiles/config/swaylock, dest: ~/.config/swaylock }
+        - { src: ~/Workspace/dotfiles/config/waybar, dest: ~/.config/waybar }
+        - { src: ~/Workspace/dotfiles/config-devbox/fish, dest: ~/.config-devbox/fish }
+        - { src: ~/Workspace/dotfiles/config-devbox/nvim, dest: ~/.config-devbox/nvim }
+        - { src: ~/Workspace/dotfiles/config-devbox/starship.toml, dest: ~/.config-devbox/starship.toml }
+    - name: Download fonts
+      ansible.builtin.unarchive:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: yes
+      loop:
+        - { src: https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip, dest: ~/.local/share/fonts/JetBrainsMono }
+        - { src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/NerdFontsSymbolsOnly.zip, dest: ~/.local/share/fonts/NerdFontsSystemOnly }
+        - { src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip, dest: ~/.local/share/fonts/JetBrainsMonoNerdFont }
