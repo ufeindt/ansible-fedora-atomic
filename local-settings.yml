@@ -23,7 +23,7 @@
       become: yes
       ansible.builtin.shell:
         cmd: curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
-      when: starship_path == ''
+      when: starship_path is not defined or starship_path.stdout is not defined or starship_path.stdout == ''
     - name: Get fisher path to check if it is installed
       shell: 
         cmd: fisher
@@ -39,7 +39,7 @@
         cmd: curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher catppuccin/fish
       args:
         executable: /usr/bin/fish
-      when: fisher_path == ''
+      when: fisher_path is not defined or fisher_path.stdout is not defined or fisher_path.stdout == ''
     - name: Create required directories
       ansible.builtin.file:
         path: "{{ item.path }}"
