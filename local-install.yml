@@ -9,6 +9,7 @@
     - name: Layer required packages with rpm-ostree
       community.general.rpm_ostree_pkg:
         name: 
+          - btop
           - distrobox
           - docker
           - docker-compose
