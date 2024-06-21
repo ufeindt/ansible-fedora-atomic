@@ -15,10 +15,16 @@
           - docker-compose
           - eza
           - fastfetch
+          - fd-find
           - fish
+          - fzf
+          - git-delta
           - kitty
           - kitty-kitten
           - neovim
+          - ripgrep
+          - rust-bat+default-devel
+          - zoxide
         state: present
     - name: Add the flathub flatpak repository remote to the user installation
       community.general.flatpak_remote:
