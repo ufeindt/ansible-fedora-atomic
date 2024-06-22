@@ -21,6 +21,7 @@
       become: yes
       ansible.builtin.dnf:
         name:
+          - bat
           - btop
           - cargo
           - code
@@ -37,7 +38,7 @@
           - python3.12
           - ripgrep
           - rust
-          - rust-bat+default-devel
+          - wget
           - zoxide
         state: present
     - name: Install ruff and uv via pip

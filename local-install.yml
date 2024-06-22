@@ -9,6 +9,7 @@
     - name: Layer required packages with rpm-ostree
       community.general.rpm_ostree_pkg:
         name: 
+          - bat
           - btop
           - distrobox
           - docker
@@ -23,7 +24,6 @@
           - kitty-kitten
           - neovim
           - ripgrep
-          - rust-bat+default-devel
           - zoxide
         state: present
     - name: Add the flathub flatpak repository remote to the user installation
