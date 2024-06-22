@@ -123,3 +123,8 @@
       ansible.builtin.git:
         repo: git@github.com:ufeindt/obsidian-vault.git
         dest: ~/Documents/obsidian-vault
+    - name: Cache bat themes and set Catppuccin Mocha as theme
+      ansible.builtin.shell:
+        cmd: bat cache --build && set -U BAT_THEME "Catppuccin Mocha"
+      args:
+        executable: /usr/bin/fish
