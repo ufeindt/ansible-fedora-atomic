@@ -34,21 +34,20 @@
     - name: Install packages from flathub
       community.general.flatpak:
         name:
-          - org.mozilla.firefox
-          - org.gtk.Gtk3theme.Adwaita-dark
-          - org.chromium.Chromium
-          - com.vivaldi.Vivaldi
-          - com.github.tchx84.Flatseal
           - com.discordapp.Discord
-          - rest.insomnia.Insomnia
+          - com.github.tchx84.Flatseal
           - com.logseq.Logseq
-          - md.obsidian.Obsidian
           - com.slack.Slack
+          - com.transmissionbt.Transmission
+          - com.valvesoftware.Steam
+          - com.vivaldi.Vivaldi
+          - io.dbeaver.DBeaverCommunity
+          - md.obsidian.Obsidian
+          - org.chromium.Chromium
           - org.flameshot.Flameshot
           - org.gimp.GIMP
-          - org.inkscape.Inkscape
-          - io.dbeaver.DBeaverCommunity
-          - com.valvesoftware.Steam
           - org.gnome.Evince
-          - org.gimp.GIMP
+          - org.gtk.Gtk3theme.Adwaita-dark
           - org.inkscape.Inkscape
+          - org.mozilla.firefox
+          - rest.insomnia.Insomnia
