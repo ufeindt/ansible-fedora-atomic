@@ -20,6 +20,7 @@
           - fish
           - fzf
           - git-delta
+          - keychain
           - kitty
           - kitty-kitten
           - neovim
