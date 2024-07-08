@@ -25,6 +25,7 @@
           - btop
           - cargo
           - code
+          - direnv
           - eza
           - fd-find
           - fish
