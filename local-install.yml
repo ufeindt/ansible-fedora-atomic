@@ -12,8 +12,6 @@
           - bat
           - btop
           - distrobox
-          - docker
-          - docker-compose
           - eza
           - fastfetch
           - fd-find
@@ -24,6 +22,7 @@
           - kitty
           - kitty-kitten
           - neovim
+          - podman-compose
           - ripgrep
           - zoxide
         state: present

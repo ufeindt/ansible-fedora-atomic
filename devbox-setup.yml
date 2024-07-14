@@ -12,11 +12,14 @@
     - name: Copy VS Code repo to /etc/yuom.repos.d
       become: yes
       ansible.builtin.copy:
-        src: vscode.repo
-        dest: /etc/yum.repos.d/vscode.repo
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
         owner: root
         group: root
         mode: "0644"
+      loop:
+        - { src: cloudflare-ascii.repo, dest: /etc/yum.repos.d/cloudflare.repo }
+        - { src: vscode.repo, dest: /etc/yum.repos.d/vscode.repo }
     - name: Install additional packages
       become: yes
       ansible.builtin.dnf:
@@ -24,6 +27,7 @@
           - bat
           - btop
           - cargo
+          - cloudflared
           - code
           - direnv
           - eza
