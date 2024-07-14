@@ -2,7 +2,7 @@
 Description=Change the wallpaper, downloading a new one if needed
 
 [Service]
-ExecStart=/home/ulrich/.local/bin/update-packages
+ExecStart=%h/.local/bin/update-packages
 
 [Install]
 WantedBy=multi-user.target

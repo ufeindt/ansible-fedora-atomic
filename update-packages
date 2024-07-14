@@ -14,4 +14,4 @@ notify-send "Updating dnf packages in devbox"
 distrobox enter devbox -e sudo dnf update -y
 notify-send "Finished updating dnf packages in devbox"
 
-notify-send "Updates complete. Please restart your computer at you convenience." -t 0
+notify-send "Updates complete. Please restart your computer at your convenience." -t 0
