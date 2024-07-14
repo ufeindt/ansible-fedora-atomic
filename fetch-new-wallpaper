@@ -1,0 +1,11 @@
+#!/bin/bash
+
+FILENAME=$(eval "curl -s https://wallpaper-api.ufeindt.workers.dev/")
+
+if [ ! -f ~/Pictures/Wallpapers/$FILENAME ]; then
+  wget https://wallpapers.cosmicflowch.art/$FILENAME -O ~/Pictures/Wallpapers/$FILENAME
+fi
+
+cp ~/Pictures/Wallpapers/$FILENAME ~/Pictures/Wallpapers/current.jpg
+
+swaymsg output "*" bg ~/Pictures/Wallpapers/current.jpg fill

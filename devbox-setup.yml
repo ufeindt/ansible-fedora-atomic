@@ -9,7 +9,7 @@
       ansible.builtin.rpm_key:
         state: present
         key: https://packages.microsoft.com/keys/microsoft.asc
-    - name: Copy VS Code repo to /etc/yuom.repos.d
+    - name: Copy external repos to /etc/yuom.repos.d
       become: yes
       ansible.builtin.copy:
         src: "{{ item.src }}"

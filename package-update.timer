@@ -1,0 +1,9 @@
+[Unit]
+Description=Update all packages every Friday at 16:00 local
+
+[Timer]
+OnCalendar=Friday 16:00 Europe/Stockholm
+Persistent=true
+
+[Install]
+WantedBy=timers.target
