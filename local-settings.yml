@@ -123,7 +123,7 @@
         cmd: distrobox create -Y --name devbox --image fedora:40 --additional-packages ansible
       args:
         executable: /usr/bin/fish
-    - name: Clone my dotfile git repository
+    - name: Clone my Obsidian vault
       ansible.builtin.git:
         repo: git@github.com:ufeindt/obsidian-vault.git
         dest: ~/Documents/obsidian-vault
@@ -139,12 +139,22 @@
         mode: "{{ item.mode }}"
       loop:
         - { src: "current.jpg", dest: "~/Pictures/Wallpapers/current.jpg", mode: "0755"}
-        - { src: "fetch-new-wallpaper", dest: "~/.local/bin/fetch-new-wallpaper", mode: "0755"}
+        - { src: "annotated-screenshot", dest: "~/.local/bin/annotated-screenshot", mode: "0755"}
         - { src: "update-packages", dest: "~/.local/bin/update-packages", mode: "0755"}
         - { src: "package-update.service", dest: "~/.local/share/systemd/user/package-update.service", mode: "0644"}
         - { src: "package-update.timer", dest: "~/.local/share/systemd/user/package-update.timer", mode: "0644"}
         - { src: "wallpaper-cycle.service", dest: "~/.local/share/systemd/user/wallpaper-cycle.service", mode: "0644"}
         - { src: "wallpaper-cycle.timer", dest: "~/.local/share/systemd/user/wallpaper-cycle.timer", mode: "0644"}
+    - name: Check whether fetch-new-wallpaper script exists 
+      ansible.builtin.stat:
+        path: ~/.local/bin/fetch-new-wallpaper
+      register: fetch_new_wallpaper
+    - name: Copy fetch-new-wallpaper script only if not already a link
+      ansible.builtin.copy:
+        src: fetch-new-wallpaper
+        dest: ~/.local/bin/fetch-new-wallpaper
+        mode: "0755"
+      when: fetch_new_wallpaper.stat is defined and fetch_new_wallpaper.stat.islnk is false 
     - name: Enable and start package update # https://kubernetes.io/docs/concepts/services-networking/service/
       ansible.builtin.systemd_service:
         name: "{{ item.name }}"

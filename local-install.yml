@@ -24,6 +24,7 @@
           - neovim
           - podman-compose
           - ripgrep
+          - swappy
           - zoxide
         state: present
     - name: Add the flathub flatpak repository remote to the user installation
@@ -44,10 +45,8 @@
           - io.dbeaver.DBeaverCommunity
           - md.obsidian.Obsidian
           - org.chromium.Chromium
-          - org.flameshot.Flameshot
           - org.gimp.GIMP
           - org.gnome.Evince
           - org.gtk.Gtk3theme.Adwaita-dark
           - org.inkscape.Inkscape
           - org.mozilla.firefox
-          - rest.insomnia.Insomnia
