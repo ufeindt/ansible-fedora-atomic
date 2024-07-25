@@ -106,7 +106,7 @@
         - { name: interactive.diffFilter, value: delta --color-only }
         - { name: merge.conflictstyle, value: diff3 }
         - { name: pull.rebase, value: true }
-        - { name: push.autoSetRemote, value: true }
+        - { name: push.autoSetupRemote, value: true }
         - { name: user.email, value: ufeindt@gmail.com }
         - { name: user.name, value: Ulrich Feindt }
     - name: Set gnome setting to prefer dark color schemes
