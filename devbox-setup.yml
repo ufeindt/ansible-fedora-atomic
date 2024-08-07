@@ -88,6 +88,22 @@
       args:
         executable: /usr/bin/fish
       when: fisher_path is not defined or fisher_path.stdout is not defined or fisher_path.stdout == ''
+    - name: Get rye path to check if it is installed
+      shell: 
+        cmd: which rye
+      args:
+        executable: /usr/bin/fish
+      register: rye_path
+      ignore_errors: true
+      changed_when: 
+        - rye_path.rc == 1
+        - "'which: no rye' in starship_path.stderr"
+    - name: Install rye if no path
+      ansible.builtin.shell:
+        cmd: curl -sSf https://rye.astral.sh/get | bash
+      args:
+        executable: /usr/bin/fish
+      when: rye_path is not defined or rye_path.stdout is not defined or rye_path.stdout == ''
     - name: Export VS code for rofi access
       ansible.builtin.shell:
         cmd: distrobox-export --app code
