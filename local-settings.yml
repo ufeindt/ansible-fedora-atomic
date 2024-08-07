@@ -103,6 +103,7 @@
         - { name: core.pager, value: delta }
         - { name: delta.navigate, value: true }
         - { name: diff.colorMoved, value: default }
+        - { name: init.defaultBranch, value: main }
         - { name: interactive.diffFilter, value: delta --color-only }
         - { name: merge.conflictstyle, value: diff3 }
         - { name: pull.rebase, value: true }
