@@ -121,7 +121,7 @@
          mode: '0644'
     - name: Create dev distrobox
       ansible.builtin.shell: 
-        cmd: distrobox create -Y --name devbox --image fedora:40 --additional-packages ansible
+        cmd: distrobox create -Y --name devbox --image fedora:41 --additional-packages ansible
       args:
         executable: /usr/bin/fish
     - name: Clone my Obsidian vault

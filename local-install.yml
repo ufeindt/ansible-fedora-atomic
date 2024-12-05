@@ -35,12 +35,10 @@
     - name: Install packages from flathub
       community.general.flatpak:
         name:
-          - com.discordapp.Discord
           - com.github.tchx84.Flatseal
           - com.logseq.Logseq
           - com.slack.Slack
           - com.transmissionbt.Transmission
-          - com.valvesoftware.Steam
           - com.vivaldi.Vivaldi
           - io.dbeaver.DBeaverCommunity
           - md.obsidian.Obsidian
@@ -50,3 +48,5 @@
           - org.gtk.Gtk3theme.Adwaita-dark
           - org.inkscape.Inkscape
           - org.mozilla.firefox
+          - org.onlyoffice.desktopeditors
+          - org.videolan.VLC
