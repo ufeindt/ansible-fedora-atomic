@@ -18,7 +18,7 @@
         group: root
         mode: "0644"
       loop:
-        - { src: cloudflare-ascii.repo, dest: /etc/yum.repos.d/cloudflare.repo }
+        - { src: cloudflared-ascii.repo, dest: /etc/yum.repos.d/cloudflare.repo }
         - { src: vscode.repo, dest: /etc/yum.repos.d/vscode.repo }
     - name: Install additional packages
       become: yes
