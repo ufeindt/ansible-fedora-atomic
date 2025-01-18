@@ -89,22 +89,6 @@
     - name: Export VS code for rofi access
       ansible.builtin.shell:
         cmd: distrobox-export --app code
-    - name: Get rustup path to check if it is installed
-      shell: 
-        cmd: rustup
-      args:
-        executable: /usr/bin/fish
-      register: rustup_path
-      ignore_errors: true
-      changed_when: 
-        - rustup_path.rc == 1
-        - "'fish: Unknown command: rustup' in rustup_path.stderr"
-    - name: Install rustup if no path
-      ansible.builtin.shell:
-        cmd: curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-      args:
-        executable: /usr/bin/fish
-      when: rustup_path is not defined or rustup_path.stdout is not defined or rustup_path.stdout == ''
     - name: Get uv path to check if it is installed
       shell: 
         cmd: uv
