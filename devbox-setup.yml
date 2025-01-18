@@ -43,11 +43,10 @@
           - python3.11
           - python3.12
           - ripgrep
-          - rust
           - wget
           - zoxide
         state: present
-    - name: Install ruff and uv via pip
+    - name: Install ruff via pip
       ansible.builtin.pip:
         name:
           - ruff

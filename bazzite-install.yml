@@ -1,0 +1,34 @@
+- hosts: localhost
+  tasks:
+    - name: Layer required packages with rpm-ostree
+      community.general.rpm_ostree_pkg:
+        name: 
+          - bat
+          - btop
+          - distrobox
+          - eza
+          - fastfetch
+          - fd-find
+          - fish
+          - fzf
+          - git-delta
+          - keychain
+          - kitty
+          - kitty-kitten
+          - neovim
+          - podman-compose
+          - ripgrep
+          - zoxide
+        state: present
+    - name: Install packages from flathub
+      community.general.flatpak:
+        name:
+          - com.logseq.Logseq
+          - com.transmissionbt.Transmission
+          - io.itch.itch
+          - md.obsidian.Obsidian
+          - org.gimp.GIMP
+          - org.gnome.Evince
+          - org.inkscape.Inkscape
+          - org.onlyoffice.desktopeditors
+          - org.videolan.VLC
