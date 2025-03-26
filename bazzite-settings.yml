@@ -42,6 +42,7 @@
         - { src: ~/dotfiles/config/fish, dest: ~/.config/fish }
         - { src: ~/dotfiles/config/kitty, dest: ~/.config/kitty }
         - { src: ~/dotfiles/config/nvim, dest: ~/.config/nvim }
+        - { src: ~/dotfiles/config/ruff, dest: ~/.config/ruff }
         - { src: ~/dotfiles/config/starship.toml, dest: ~/.config/starship.toml }
     - name: Change user shell to fish
       become: yes

@@ -44,6 +44,7 @@
         - { src: ~/dotfiles/config/kitty, dest: ~/.config/kitty }
         - { src: ~/dotfiles/config/nvim, dest: ~/.config/nvim }
         - { src: ~/dotfiles/config/rofi, dest: ~/.config/rofi }
+        - { src: ~/dotfiles/config/ruff, dest: ~/.config/ruff }
         - { src: ~/dotfiles/config/starship.toml, dest: ~/.config/starship.toml }
         - { src: ~/dotfiles/config/sway, dest: ~/.config/sway }
         - { src: ~/dotfiles/config/swaylock, dest: ~/.config/swaylock }
