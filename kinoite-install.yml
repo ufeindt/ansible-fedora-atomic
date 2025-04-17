@@ -1,5 +1,11 @@
 - hosts: localhost
   tasks:
+    - name: Remove default Firefox with rpm-ostree
+      community.general.rpm_ostree_pkg:
+        name: 
+          - firefox
+          - firefox-langpacks
+        state: absent
     - name: Layer required packages with rpm-ostree
       community.general.rpm_ostree_pkg:
         name: 
@@ -26,5 +32,6 @@
           - org.gnome.Evince
           - org.gnome.Papers
           - org.inkscape.Inkscape
+          - org.kde.yakuake
+          - org.mozilla.firefox
           - org.onlyoffice.desktopeditors
-          - org.videolan.VLC
