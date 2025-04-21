@@ -10,8 +10,11 @@
       community.general.rpm_ostree_pkg:
         name: 
           - bat
-          - eza
+          - btop
+          - distrobox
+          - fastfetch
           - fd-find
+          - fish
           - git-delta
           - keychain
           - kitty

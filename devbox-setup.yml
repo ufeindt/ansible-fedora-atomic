@@ -24,13 +24,13 @@
       become: yes
       ansible.builtin.dnf:
         name:
+          - awk
           - bat
           - btop
           - cargo
           - cloudflared
           - code
           - direnv
-          - eza
           - fd-find
           - fish
           - fzf
