@@ -24,7 +24,6 @@
       become: yes
       ansible.builtin.dnf:
         name:
-          - awk
           - bat
           - btop
           - cargo
@@ -34,6 +33,7 @@
           - fd-find
           - fish
           - fzf
+          - gawk
           - git
           - git-delta
           - gnome-keyring
@@ -105,4 +105,17 @@
       args:
         executable: /usr/bin/fish
       when: uv_path is not defined or uv_path.stdout is not defined or uv_path.stdout == ''
-    
+    - name: Create symbolic links for distrobox-host-exec to access tools outside the devbox
+      become: yes
+      ansible.builtin.file:
+        src: /usr/bin/distrobox-host-exec
+        dest: "{{ item }}"
+        state: link
+      loop:
+        - /usr/local/bin/docker
+        - /usr/local/bin/docker-compose
+        - /usr/local/bin/kitten
+        - /usr/local/bin/kitty
+        - /usr/local/bin/podman
+        - /usr/local/bin/podman-compose
+        - /usr/local/bin/xdg-open
