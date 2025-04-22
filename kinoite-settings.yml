@@ -128,7 +128,8 @@
         dest: /tmp/catppuccin-kde
     - name: Apply Catppuccin Mocha theme to KDE Plasma
       ansible.builtin.shell:
-        cmd: /tmp/catppuccin-kde/catppuccin-kde 1 4 1 global
+        cmd: ./install.sh 1 4 1 global
+        chdir: /tmp/catppuccin-kde/
       args:
         executable: /usr/bin/fish
     
