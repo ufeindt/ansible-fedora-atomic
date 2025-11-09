@@ -18,7 +18,10 @@
         group: root
         mode: "0644"
       loop:
-        - { src: cloudflared-ascii.repo, dest: /etc/yum.repos.d/cloudflare.repo }
+        - {
+            src: cloudflared-ascii.repo,
+            dest: /etc/yum.repos.d/cloudflare.repo,
+          }
         - { src: vscode.repo, dest: /etc/yum.repos.d/vscode.repo }
     - name: Install additional packages
       become: yes
@@ -39,30 +42,23 @@
           - gnome-keyring
           - keychain
           - neovim
-          - pip
-          - python3.11
-          - python3.12
           - ripgrep
           - wget
           - zoxide
         state: present
-    - name: Install ruff via pip
-      ansible.builtin.pip:
-        name:
-          - ruff
     - name: Change user shell to fish
       become: yes
       user:
         name: "{{ user_id }}"
         shell: /usr/bin/fish
     - name: Get starship path to check if it is installed
-      shell: 
+      shell:
         cmd: which starship
       args:
         executable: /usr/bin/fish
       register: starship_path
       ignore_errors: true
-      changed_when: 
+      changed_when:
         - starship_path.rc == 1
         - "'which: no starship' in starship_path.stderr"
     - name: Install starship if no path
@@ -71,13 +67,13 @@
         cmd: curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
       when: starship_path is not defined or starship_path.stdout is not defined or starship_path.stdout == ''
     - name: Get fisher path to check if it is installed
-      shell: 
+      shell:
         cmd: fisher
       args:
         executable: /usr/bin/fish
       register: fisher_path
       ignore_errors: true
-      changed_when: 
+      changed_when:
         - fisher_path.rc == 1
         - "'fish: Unknown command: fisher' in fisher_path.stderr"
     - name: Install fisher if no path
@@ -90,13 +86,13 @@
       ansible.builtin.shell:
         cmd: distrobox-export --app code
     - name: Get uv path to check if it is installed
-      shell: 
+      shell:
         cmd: uv
       args:
         executable: /usr/bin/fish
       register: uv_path
       ignore_errors: true
-      changed_when: 
+      changed_when:
         - uv_path.rc == 1
         - "'fish: Unknown command: uv' in uv_path.stderr"
     - name: Install uv if no path
@@ -105,6 +101,22 @@
       args:
         executable: /usr/bin/fish
       when: uv_path is not defined or uv_path.stdout is not defined or uv_path.stdout == ''
+    - name: Get rustup path to check if it is installed
+      shell:
+        cmd: rustup
+      args:
+        executable: /usr/bin/fish
+      register: rustup_path
+      ignore_errors: true
+      changed_when:
+        - rustup_path.rc == 1
+        - "'fish: Unknown command: rustup' in uv_path.stderr"
+    - name: Install rustup if no path
+      ansible.builtin.shell:
+        cmd: curl -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        executable: /usr/bin/fish
+      when: rustup_path is not defined or rustup_path.stdout is not defined or rustup_path.stdout == ''
     - name: Create symbolic links for distrobox-host-exec to access tools outside the devbox
       become: yes
       ansible.builtin.file:
