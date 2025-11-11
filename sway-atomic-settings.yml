@@ -30,7 +30,7 @@
       ansible.builtin.file:
         path: ~/.config/fish
         state: absent
-      when: fish_config.stat is defined and fish_config.stat.islnk is false 
+      when: fish_config.stat is defined and fish_config.stat.islnk is false
     - name: Create symbolic links to my dotfiles
       ansible.builtin.file:
         src: "{{ item.src }}"
@@ -45,7 +45,10 @@
         - { src: ~/dotfiles/config/nvim, dest: ~/.config/nvim }
         - { src: ~/dotfiles/config/rofi, dest: ~/.config/rofi }
         - { src: ~/dotfiles/config/ruff, dest: ~/.config/ruff }
-        - { src: ~/dotfiles/config/starship.toml, dest: ~/.config/starship.toml }
+        - {
+            src: ~/dotfiles/config/starship.toml,
+            dest: ~/.config/starship.toml,
+          }
         - { src: ~/dotfiles/config/sway, dest: ~/.config/sway }
         - { src: ~/dotfiles/config/swaylock, dest: ~/.config/swaylock }
         - { src: ~/dotfiles/config/waybar, dest: ~/.config/waybar }
@@ -55,13 +58,13 @@
         name: "{{ user_id }}"
         shell: /usr/bin/fish
     - name: Get starship path to check if it is installed
-      shell: 
+      shell:
         cmd: which starship
       args:
         executable: /usr/bin/fish
       register: starship_path
       ignore_errors: true
-      changed_when: 
+      changed_when:
         - starship_path.rc == 1
         - "'which: no starship' in starship_path.stderr"
     - name: Install starship if no path
@@ -70,13 +73,13 @@
         cmd: curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
       when: starship_path is not defined or starship_path.stdout is not defined or starship_path.stdout == ''
     - name: Get fisher path to check if it is installed
-      shell: 
+      shell:
         cmd: fisher
       args:
         executable: /usr/bin/fish
       register: fisher_path
       ignore_errors: true
-      changed_when: 
+      changed_when:
         - fisher_path.rc == 1
         - "'fish: Unknown command: fisher' in fisher_path.stderr"
     - name: Install fisher if no path
@@ -91,9 +94,18 @@
         dest: "{{ item.dest }}"
         remote_src: yes
       loop:
-        - { src: https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip, dest: ~/.local/share/fonts/JetBrainsMono }
-        - { src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/NerdFontsSymbolsOnly.zip, dest: ~/.local/share/fonts/NerdFontsSystemOnly }
-        - { src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip, dest: ~/.local/share/fonts/JetBrainsMonoNerdFont }
+        - {
+            src: https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip,
+            dest: ~/.local/share/fonts/JetBrainsMono,
+          }
+        - {
+            src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/NerdFontsSymbolsOnly.zip,
+            dest: ~/.local/share/fonts/NerdFontsSystemOnly,
+          }
+        - {
+            src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip,
+            dest: ~/.local/share/fonts/JetBrainsMonoNerdFont,
+          }
     - name: Git config
       git_config:
         name: "{{ item.name }}"
@@ -109,20 +121,15 @@
         - { name: merge.conflictstyle, value: diff3 }
         - { name: pull.rebase, value: true }
         - { name: push.autoSetupRemote, value: true }
-        - { name: user.email, value: ufeindt@gmail.com }
+        - { name: user.email, value: ulrich@feindt.dev }
         - { name: user.name, value: Ulrich Feindt }
     - name: Set gnome setting to prefer dark color schemes
       community.general.dconf:
         key: "/org/gnome/desktop/interface/color-scheme"
         value: "'prefer-dark'"
-    - name: Copy Flatpak global overrides
-      ansible.builtin.copy:
-         src: flatpak-global-overrides
-         dest: ~/.local/share/flatpak/overrides/global
-         mode: '0644'
     - name: Create dev distrobox
-      ansible.builtin.shell: 
-        cmd: distrobox create -Y --name devbox --image fedora:41 --additional-packages ansible
+      ansible.builtin.shell:
+        cmd: distrobox create -Y --name devbox --image fedora:43 --additional-packages ansible
       args:
         executable: /usr/bin/fish
     - name: Clone my Obsidian vault
@@ -140,14 +147,47 @@
         dest: "{{ item.dest }}"
         mode: "{{ item.mode }}"
       loop:
-        - { src: "current.jpg", dest: "~/Pictures/Wallpapers/current.jpg", mode: "0755"}
-        - { src: "annotated-screenshot", dest: "~/.local/bin/annotated-screenshot", mode: "0755"}
-        - { src: "update-packages", dest: "~/.local/bin/update-packages", mode: "0755"}
-        - { src: "package-update.service", dest: "~/.local/share/systemd/user/package-update.service", mode: "0644"}
-        - { src: "package-update.timer", dest: "~/.local/share/systemd/user/package-update.timer", mode: "0644"}
-        - { src: "wallpaper-cycle.service", dest: "~/.local/share/systemd/user/wallpaper-cycle.service", mode: "0644"}
-        - { src: "wallpaper-cycle.timer", dest: "~/.local/share/systemd/user/wallpaper-cycle.timer", mode: "0644"}
-    - name: Check whether fetch-new-wallpaper script exists 
+        - {
+            src: "sway-atomic-files/flatpak-global-overrides",
+            dest: "~/.local/share/flatpak/overrides/global",
+            mode: "0644",
+          }
+        - {
+            src: "sway-atomic-files/current.jpg",
+            dest: "~/Pictures/Wallpapers/current.jpg",
+            mode: "0644",
+          }
+        - {
+            src: "sway-atomic-files/annotated-screenshot",
+            dest: "~/.local/bin/annotated-screenshot",
+            mode: "0755",
+          }
+        - {
+            src: "sway-atomic-files/update-packages",
+            dest: "~/.local/bin/update-packages",
+            mode: "0755",
+          }
+        - {
+            src: "sway-atomic-files/package-update.service",
+            dest: "~/.local/share/systemd/user/package-update.service",
+            mode: "0644",
+          }
+        - {
+            src: "sway-atomic-files/package-update.timer",
+            dest: "~/.local/share/systemd/user/package-update.timer",
+            mode: "0644",
+          }
+        - {
+            src: "sway-atomic-files/wallpaper-cycle.service",
+            dest: "~/.local/share/systemd/user/wallpaper-cycle.service",
+            mode: "0644",
+          }
+        - {
+            src: "sway-atomic-files/wallpaper-cycle.timer",
+            dest: "~/.local/share/systemd/user/wallpaper-cycle.timer",
+            mode: "0644",
+          }
+    - name: Check whether fetch-new-wallpaper script exists
       ansible.builtin.stat:
         path: ~/.local/bin/fetch-new-wallpaper
       register: fetch_new_wallpaper
@@ -156,15 +196,14 @@
         src: fetch-new-wallpaper
         dest: ~/.local/bin/fetch-new-wallpaper
         mode: "0755"
-      when: fetch_new_wallpaper.stat is defined and fetch_new_wallpaper.stat.islnk is false 
+      when: fetch_new_wallpaper.stat is defined and fetch_new_wallpaper.stat.islnk is false
     - name: Enable and start package update # https://kubernetes.io/docs/concepts/services-networking/service/
       ansible.builtin.systemd_service:
         name: "{{ item.name }}"
         scope: user
         daemon-reload: true
-        enabled: true 
+        enabled: true
         state: started
       loop:
         - { name: "package-update.timer" }
         - { name: "wallpaper-cycle.timer" }
-

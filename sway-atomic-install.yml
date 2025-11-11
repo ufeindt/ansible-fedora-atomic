@@ -2,17 +2,17 @@
   tasks:
     - name: Remove default Firefox with rpm-ostree
       community.general.rpm_ostree_pkg:
-        name: 
+        name:
           - firefox
           - firefox-langpacks
         state: absent
     - name: Layer required packages with rpm-ostree
       community.general.rpm_ostree_pkg:
-        name: 
+        name:
           - bat
           - btop
+          - chezmoi
           - distrobox
-          - eza
           - fastfetch
           - fd-find
           - fish
@@ -35,16 +35,17 @@
     - name: Install packages from flathub
       community.general.flatpak:
         name:
+          - app.zen_browser.zen
+          - com.discordapp.Discord
           - com.github.tchx84.Flatseal
-          - com.logseq.Logseq
-          - com.slack.Slack
+          - com.nextcloud.desktopclient.nextcloud
+          - com.protonvpn.www
           - com.transmissionbt.Transmission
-          - com.vivaldi.Vivaldi
-          - io.dbeaver.DBeaverCommunity
           - md.obsidian.Obsidian
           - org.chromium.Chromium
           - org.gimp.GIMP
           - org.gnome.Evince
+          - org.gnome.Papers
           - org.gtk.Gtk3theme.Adwaita-dark
           - org.inkscape.Inkscape
           - org.mozilla.firefox
