@@ -129,7 +129,7 @@
         value: "'prefer-dark'"
     - name: Create dev distrobox
       ansible.builtin.shell:
-        cmd: distrobox create -Y --name devbox --image fedora:43 --additional-packages ansible
+        cmd: distrobox create -Y --name devbox --image fedora:44 --additional-packages ansible
       args:
         executable: /usr/bin/fish
     - name: Clone my Obsidian vault

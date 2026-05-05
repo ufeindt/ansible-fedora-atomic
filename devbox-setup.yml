@@ -19,10 +19,10 @@
         mode: "0644"
       loop:
         - {
-            src: cloudflared-ascii.repo,
+            src: repos/cloudflared-ascii.repo,
             dest: /etc/yum.repos.d/cloudflare.repo,
           }
-        - { src: vscode.repo, dest: /etc/yum.repos.d/vscode.repo }
+        - { src: repos/vscode.repo, dest: /etc/yum.repos.d/vscode.repo }
     - name: Install additional packages
       become: yes
       ansible.builtin.dnf:
